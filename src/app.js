@@ -59,7 +59,16 @@ app.setHandler({
             time = this.$inputs.time.value;
         }
 
-        let result = await Forecast.getForecast(location, date, time);
+        let dateTime = Utility.getDateTime(date, time);
+        let today = new Date();
+        let nextWeek = new Date().setDate(today.getDate() + 7);
+        if(dateTime < today) {
+            return this.ask(this.t('slot-datetime-past'));
+        }
+        if(dateTime > nextWeek) {
+            return this.ask(this.t('slot-datetime-7d'));
+        }
+        let result = await Forecast.getForecast(location, dateTime, !!time);
 
         let speed = Math.round( result.windSpeed * 10) / 10;
         let gust = Math.round( result.windGust * 10) / 10;
@@ -86,7 +95,7 @@ app.setHandler({
 
         // TODO add warnings that are present in the API
 
-        this.tell(speechOutput);
+        return this.tell(speechOutput);
     },
 });
 

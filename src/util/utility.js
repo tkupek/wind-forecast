@@ -14,17 +14,19 @@ const Utility = {
     },
     getDateTime: function (date, time) {
         let dateString = undefined;
+        if(!date && !time) return dateString;
+
         if(date) {
             dateString = date
+        } else {
+            dateString = (new Date()).toISOString().slice(0,10);
         }
 
-        if (time) {
-            !dateString && (dateString = (new Date()).toISOString().slice(0,10));
-            time = time.toString();
-            if(!time.includes(':')) {
-                time += ':00'
-            }
-            dateString += 'T' + time;
+        if (time && time !== '0') {
+            let timeString = time;
+            timeString.length === 1 && (timeString = '0' + timeString);
+            !timeString.includes(':') && (timeString += ':00');
+            dateString += 'T' + timeString;
         }
 
         return dateString ? new Date(dateString) : undefined;
