@@ -81,13 +81,19 @@ app.setHandler({
             mode = 'predicted';
         }
 
+        let dateTimeString = Utility.getDateTimeString(result.dateTime, !!time, this.getLocale());
+        if(dateTimeString) {
+            dateTimeString = this.t('at ') + dateTimeString;
+        } else {
+            dateTimeString = this.t (dateTimeString = this.t('today'));
+        }
         speechOutput = this.t('forecast-' + mode, {
             location: result.location,
             speed: speed,
             unit: this.t(result.units.windSpeed),
             gust: gust,
             direction: this.t(result.windDirection),
-            dateTime: Utility.getDateTimeString(result.dateTime, !!time, this.getLocale())
+            dateTime: dateTimeString
         });
         speechOutput += ' ' + (cloudCover !== 0 ?
             this.t('clouds-' + mode, {coverage: cloudCover}) : this.t('clouds-no-' + mode));

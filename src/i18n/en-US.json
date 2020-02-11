@@ -5,6 +5,8 @@
     "help": "You can ask for locations, dates and a specific time. The wind data is provided by darksky.net and always up to date. Try it out!",
     "slot-datetime-past": "Only current conditions and forecasts are available. Please choose a time in the future or just ask for a location.",
     "slot-datetime-7d": "A maximum of seven days forecast is available. Please note that usually only the next few days have an accurate prediction.",
+    "today": "today",
+    "at": "at",
 
     "forecast-current": "In {{location}}, there is a current wind of <emphasis level=\"moderate\">{{speed}}</emphasis> {{unit}} from {{direction}}<break strength=\"medium\"/> with wind gusts of <emphasis level=\"moderate\">{{gust}}</emphasis> {{unit}}.",
     "clouds-current": "A <emphasis level=\"moderate\">{{coverage}}</emphasis>% cloud coverage is given.",

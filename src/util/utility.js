@@ -32,7 +32,7 @@ const Utility = {
         return dateString ? new Date(dateString) : undefined;
     },
     getDateTimeString: function (date, withTime, locale) {
-        let dateString = '';
+        let dateString = undefined;
         if (!date) return dateString;
 
         if(!Utility.sameDay(date, new Date())) {
@@ -50,6 +50,10 @@ const Utility = {
         return dateString;
     },
     sameDay: function(d1, d2) {
+        console.log(d1)
+        console.log(d2)
+        console.log(d1.toISOString())
+        console.log(d2.toISOString())
         return d1.getFullYear() === d2.getFullYear() &&
             d1.getMonth() === d2.getMonth() &&
             d1.getDate() === d2.getDate();
