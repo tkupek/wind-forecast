@@ -57,21 +57,25 @@ app.setHandler({
 
         let result = await Forecast.getForecast(location, date, time);
 
+        console.log(JSON.stringify(result.units));
+
+        let speed = Math.round( result.windSpeed * 10) / 10;
+        let gust = Math.round( result.windGust * 10) / 10;
+        let cloudCover = Math.round(result.cloudCover * 100);
+        let visibility = Math.round(result.visibility);
+
         let speechOutput;
         if (!date && !time) {
             speechOutput = this.t('forecast-current', {
                 location: result.location,
-                speed: result.windSpeed,
-                gust: result.windGust,
+                speed: speed,
+                unit: result.units.windSpeed,
+                gust: gust,
                 direction: this.t(result.windDirection)
             });
-
-            let cloudCover = Math.round(result.cloudCover * 100);
             speechOutput += ' ' + (cloudCover !== 0 ?
                 this.t('clouds-current', {coverage: cloudCover}) : this.t('clouds-current-no'));
-
-            let visibility = Math.round(result.visibility);
-            speechOutput += ' ' + this.t('visibility-current', {visibility: visibility})
+            speechOutput += ' ' + this.t('visibility-current', {visibility: visibility, unit: result.units.visibility})
         }
 
         // TODO add date / time lookup

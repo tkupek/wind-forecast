@@ -1,10 +1,10 @@
 {
   "translation": {
     "welcome": "Welcome to wind forecast! What location are you looking for?",
-    "forecast-current": "In {{location}}, there is a current wind of {{speed}} m/s from {{direction}} with wind gusts of {{gust}} m/s.",
+    "forecast-current": "In {{location}}, there is a current wind of {{speed}} {{unit}} from {{direction}} with wind gusts of {{gust}} {{unit}}.",
     "clouds-current": "A {{coverage}}% cloud coverage is given.",
     "clouds-current-no": "No clouds are present.",
-    "visibility-current": "The visibility is around {{visibility}} km.",
+    "visibility-current": "The visibility is around {{visibility}} {{unit}}.",
     "slot-location": ["Which location are you interested in?", "Which location are you looking for?", "Please name a location."],
     "W": "west",
     "E": "east",
