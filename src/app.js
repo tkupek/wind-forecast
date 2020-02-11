@@ -10,6 +10,8 @@ const { GoogleAssistant } = require('jovo-platform-googleassistant');
 const { JovoDebugger } = require('jovo-plugin-debugger');
 const { FileDb } = require('jovo-db-filedb');
 
+const Forecast = require('./forecast');
+
 const app = new App();
 
 app.use(
@@ -33,8 +35,9 @@ app.setHandler({
         this.ask('Hi there! What location are you looking for?');
     },
 
-    GetWindForecast() {
-        this.tell('Here comes the forecast!');
+    async GetWindForecast() {
+        let result = await Forecast.getForecast(undefined, undefined, undefined);
+        this.tell('Here comes the forecast: ' + result + ' knots.');
     },
 });
 

@@ -4,6 +4,7 @@
   "description": "A sample voice app that works with the Jovo Framework",
   "main": "src/index.js",
   "dependencies": {
+    "dark-sky-api": "^0.6.32",
     "jovo-db-filedb": "^2.0.2",
     "jovo-framework": "^2.2.30",
     "jovo-platform-alexa": "^2.0.2",

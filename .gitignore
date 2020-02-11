@@ -3,3 +3,8 @@ db/
 bundle/
 bundle.zip
 .env
+
+# api keys
+apiKeys.js
+/src/config/apiKeys.js
+/.idea/
