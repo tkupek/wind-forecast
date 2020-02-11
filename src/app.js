@@ -36,6 +36,10 @@ app.setHandler({
         this.ask(this.t('welcome'));
     },
 
+    HelpIntent() {
+        this.ask(this.t('help'));
+    },
+
     async GetWindForecast() {
         let location = undefined;
         let date = undefined;
