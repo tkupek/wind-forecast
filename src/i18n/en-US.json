@@ -1,6 +1,6 @@
 {
   "translation": {
-    "welcome": "Welcome to wind forecast! What location are you looking for?",
+    "welcome": ["Welcome to wind forecast! Which location are you looking for?", "Hi there! Which location are you interested in?", "Welcome to wind forecast! Which region are you interested in? "],
     "slot-location": ["Which location are you interested in?", "Which location are you looking for?", "Please name a location."],
 
     "forecast-current": "In {{location}}, there is a current wind of {{speed}} {{unit}} from {{direction}} with wind gusts of {{gust}} {{unit}}.",
@@ -20,7 +20,9 @@
     "NW": "north-west",
     "NE": "north-east",
     "SE": "south-east",
-    "SW": "south-west"
+    "SW": "south-west",
+
+    "mps": "m/s"
   }
 }
 

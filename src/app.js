@@ -11,6 +11,7 @@ const {JovoDebugger} = require('jovo-plugin-debugger');
 const {FileDb} = require('jovo-db-filedb');
 
 const Forecast = require('./forecast');
+const Utility = require('./util/utility');
 
 const app = new App();
 
@@ -43,7 +44,7 @@ app.setHandler({
         if (this.$inputs.location && this.$inputs.location.value) {
             location = this.$inputs.location.value;
         } else {
-            this.tell(this.t('slot-location'));
+            this.ask(this.t('slot-location'));
             return;
         }
 
@@ -63,7 +64,6 @@ app.setHandler({
 
         let speechOutput;
         let mode = 'current';
-
         if (date || time) {
             mode = 'predicted';
         }
@@ -71,14 +71,14 @@ app.setHandler({
         speechOutput = this.t('forecast-' + mode, {
             location: result.location,
             speed: speed,
-            unit: result.units.windSpeed,
+            unit: this.t(result.units.windSpeed),
             gust: gust,
             direction: this.t(result.windDirection),
-            dateTime: result.dateTime.toISOString()
+            dateTime: Utility.getDateTimeString(result.dateTime, !!time, this.getLocale())
         });
         speechOutput += ' ' + (cloudCover !== 0 ?
             this.t('clouds-' + mode, {coverage: cloudCover}) : this.t('clouds-no-' + mode));
-        speechOutput += ' ' + this.t('visibility-' + mode, {visibility: visibility, unit: result.units.visibility})
+        speechOutput += ' ' + this.t('visibility-' + mode, {visibility: visibility, unit: result.units.visibility});
 
         // TODO add warnings that are present in the API
 

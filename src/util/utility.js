@@ -28,6 +28,29 @@ const Utility = {
         }
 
         return dateString ? new Date(dateString) : undefined;
+    },
+    getDateTimeString: function (date, withTime, locale) {
+        let dateString = '';
+        if (!date) return dateString;
+
+        if(!Utility.sameDay(date, new Date())) {
+            dateString = '<say-as interpret-as="date" format="md">' + date.toISOString().slice(5, 10) + '</say-as>'
+        }
+        if(withTime) {
+            let time = date.toISOString().slice(11, 16);
+            if(locale === 'en' || locale.startsWith('en')) {
+                time = date.toLocaleString(locale, { hour: 'numeric', hour12: true })
+            }
+            dateString.length && (dateString += ' ');
+            dateString += '<say-as interpret-as="time">' + time + '</say-as>';
+        }
+
+        return dateString;
+    },
+    sameDay: function(d1, d2) {
+        return d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate();
     }
 };
 
