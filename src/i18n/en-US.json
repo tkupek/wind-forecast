@@ -5,6 +5,7 @@
     "help": "You can ask for locations, dates and a specific time. The wind data is provided by darksky.net and always up to date. Try it out!",
     "slot-datetime-past": "Only current conditions and forecasts are available. Please choose a time in the future or just ask for a location.",
     "slot-datetime-7d": "A maximum of seven days forecast is available. Please note that usually only the next few days have an accurate prediction.",
+    "slot-location-error": "Sorry I could not find your location. Please try again or ask for well known location nearby.",
     "today": "today",
     "at": "at",
 

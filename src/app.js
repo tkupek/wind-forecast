@@ -62,16 +62,24 @@ app.setHandler({
         let dateTime = Utility.getDateTime(date, time);
         let today = new Date();
         let nextWeek = new Date().setDate(today.getDate() + 7);
-        if(dateTime < today) {
+        if (dateTime < today) {
             return this.ask(this.t('slot-datetime-past'));
         }
-        if(dateTime > nextWeek) {
+        if (dateTime > nextWeek) {
             return this.ask(this.t('slot-datetime-7d'));
         }
-        let result = await Forecast.getForecast(location, dateTime, !!time);
 
-        let speed = Math.round( result.windSpeed * 10) / 10;
-        let gust = Math.round( result.windGust * 10) / 10;
+        let result;
+        try {
+            result = await Forecast.getForecast(location, dateTime, !!time);
+        } catch (e) {
+            if (e === 'GEOCODE_ERROR') {
+                return this.ask(this.t('slot-location-error'))
+            }
+        }
+
+        let speed = Math.round(result.windSpeed * 10) / 10;
+        let gust = Math.round(result.windGust * 10) / 10;
         let cloudCover = Math.round(result.cloudCover * 100);
         let visibility = Math.round(result.visibility);
 
@@ -82,10 +90,10 @@ app.setHandler({
         }
 
         let dateTimeString = Utility.getDateTimeString(result.dateTime, !!time, this.getLocale());
-        if(dateTimeString) {
+        if (dateTimeString) {
             dateTimeString = this.t('at ') + dateTimeString;
         } else {
-            dateTimeString = this.t (dateTimeString = this.t('today'));
+            dateTimeString = this.t(dateTimeString = this.t('today'));
         }
         speechOutput = this.t('forecast-' + mode, {
             location: result.location,
