@@ -6,13 +6,13 @@
     "slot-datetime-past": "Only current conditions and forecasts are available. Please choose a time in the future or just ask for a location.",
     "slot-datetime-7d": "A maximum of seven days forecast is available. Please note that usually only the next few days have an accurate prediction.",
 
-    "forecast-current": "In {{location}}, there is a current wind of {{speed}} {{unit}} from {{direction}} with wind gusts of {{gust}} {{unit}}.",
-    "clouds-current": "A {{coverage}}% cloud coverage is given.",
+    "forecast-current": "In {{location}}, there is a current wind of <emphasis level=\"moderate\">{{speed}}</emphasis> {{unit}} from {{direction}}<break strength=\"medium\"/> with wind gusts of <emphasis level=\"moderate\">{{gust}}</emphasis> {{unit}}.",
+    "clouds-current": "A <emphasis level=\"moderate\">{{coverage}}</emphasis>% cloud coverage is given.",
     "clouds-no-current": "No clouds are present.",
     "visibility-current": "The visibility is around {{visibility}} {{unit}}.",
 
-    "forecast-predicted": "In {{location}} at {{dateTime}}, there is a wind forecast of {{speed}} {{unit}} from {{direction}} with wind gusts of {{gust}} {{unit}}.",
-    "clouds-predicted": "A {{coverage}}% cloud coverage is predicted.",
+    "forecast-predicted": "In {{location}} {{dateTime}}, there is a wind forecast of <emphasis level=\"moderate\">{{speed}}</emphasis> {{unit}} from {{direction}}<break strength=\"medium\"/> with wind gusts of <emphasis level=\"moderate\">{{gust}}</emphasis> {{unit}}.",
+    "clouds-predicted": "A <emphasis level=\"moderate\">{{coverage}}</emphasis>% cloud coverage is predicted.",
     "clouds-no-predicted": "No clouds are predicted.",
     "visibility-predicted": "The visibility will be around {{visibility}} {{unit}}.",
 
