@@ -50,14 +50,11 @@ app.setHandler({
         if (this.$inputs.date && this.$inputs.date.value) {
             date = this.$inputs.date.value;
         }
-
         if (this.$inputs.time && this.$inputs.time.value) {
             time = this.$inputs.time.value;
         }
 
         let result = await Forecast.getForecast(location, date, time);
-
-        console.log(JSON.stringify(result.units));
 
         let speed = Math.round( result.windSpeed * 10) / 10;
         let gust = Math.round( result.windGust * 10) / 10;
@@ -65,21 +62,25 @@ app.setHandler({
         let visibility = Math.round(result.visibility);
 
         let speechOutput;
-        if (!date && !time) {
-            speechOutput = this.t('forecast-current', {
-                location: result.location,
-                speed: speed,
-                unit: result.units.windSpeed,
-                gust: gust,
-                direction: this.t(result.windDirection)
-            });
-            speechOutput += ' ' + (cloudCover !== 0 ?
-                this.t('clouds-current', {coverage: cloudCover}) : this.t('clouds-current-no'));
-            speechOutput += ' ' + this.t('visibility-current', {visibility: visibility, unit: result.units.visibility})
+        let mode = 'current';
+
+        if (date || time) {
+            mode = 'predicted';
         }
 
-        // TODO add date / time lookup
-        // TODO add warnings
+        speechOutput = this.t('forecast-' + mode, {
+            location: result.location,
+            speed: speed,
+            unit: result.units.windSpeed,
+            gust: gust,
+            direction: this.t(result.windDirection),
+            dateTime: result.dateTime.toISOString()
+        });
+        speechOutput += ' ' + (cloudCover !== 0 ?
+            this.t('clouds-' + mode, {coverage: cloudCover}) : this.t('clouds-no-' + mode));
+        speechOutput += ' ' + this.t('visibility-' + mode, {visibility: visibility, unit: result.units.visibility})
+
+        // TODO add warnings that are present in the API
 
         this.tell(speechOutput);
     },
