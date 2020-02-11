@@ -36,7 +36,19 @@ app.setHandler({
         this.ask(this.t('welcome'));
     },
 
+    'AMAZON.HelpIntent'() {
+        return this.toIntent('HelpIntent')
+    },
+
     HelpIntent() {
+        this.ask(this.t('help'));
+    },
+
+    'AMAZON.FallbackIntent'() {
+        return this.toIntent('FallbackIntent')
+    },
+
+    FallbackIntent() {
         this.ask(this.t('help'));
     },
 
