@@ -46,12 +46,12 @@ const Utility = {
         if (!date) return dateString;
 
         if(!Utility.sameDay(date, new Date())) {
-            dateString = '<say-as interpret-as="date">' + date.toLocaleDateString(locale, { month: '2-digit', day: '2-digit' }) + '</say-as>'
+            dateString = '<say-as interpret-as="date" format="md">' + date.toLocaleDateString(locale, { month: '2-digit', day: '2-digit' }) + '</say-as>'
         }
 
         if(withTime) {
             let time = date.toLocaleString(locale, { hour: 'numeric', hour12: locale === 'en' || locale.startsWith('en') })
-            dateString += dateString.length ? ' ' : '' + '<say-as interpret-as="time">' + time + '</say-as>';
+            dateString += ((dateString.length ? ' ' : '') + '<say-as interpret-as="time">' + time + '</say-as>');
         }
 
         return dateString;

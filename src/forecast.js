@@ -14,6 +14,7 @@ const forecast = {
 
         if(dateTime) {
             let dateTimeString = dateTime.toISOString().slice(0, -5);
+            console.debug('Send forecast request with location ' + JSON.stringify(coordinates) + ' and time ' + dateTimeString);
             return await DarkSkyApi.loadTime(dateTimeString, coordinates)
                 .then(result => {
                     result = withTime ? forecast.findBestHour(result.hourly.data, dateTime) : result.daily.data[0];
@@ -25,7 +26,7 @@ const forecast = {
             .then(result => forecast.parseResult(result, location));
     },
     parseResult: function (result, location) {
-        let parsedResult = {
+        return {
             location: location.name,
             windSpeed: result.windSpeed,
             windGust: result.windGust,
@@ -35,9 +36,6 @@ const forecast = {
             units: DarkSkyApi.getResponseUnits(),
             dateTime: undefined
         };
-
-        result.time && (parsedResult.dateTime = new Date(result.time * 1000));
-        return parsedResult;
     },
     findBestHour: function (resultList, dateTime) {
         let bestResult = undefined;
