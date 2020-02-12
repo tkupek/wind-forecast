@@ -28,6 +28,7 @@ const Utility = {
                 time = time + '00:00:00'.substr(0 + time.length, 8);
                 time = new Date('1970-01-01T' + time);
             } else {
+                time.indexOf('+') !== -1 && (time = time.substring(0, time.indexOf('+')));
                 time = new Date(time);
             }
             date.setHours(time.getHours());
