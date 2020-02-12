@@ -14,7 +14,6 @@ const forecast = {
 
         if(dateTime) {
             let dateTimeString = dateTime.toISOString().slice(0, -5);
-            console.log(dateTimeString);
             return await DarkSkyApi.loadTime(dateTimeString, coordinates)
                 .then(result => {
                     result = withTime ? forecast.findBestHour(result.hourly.data, dateTime) : result.daily.data[0];

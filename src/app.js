@@ -78,14 +78,17 @@ app.setHandler({
 
             dateTime = Utility.getDateTime(date, time, this.getType() === 'AlexaSkill');
             let today = new Date();
+            let twoDays = new Date(new Date().setDate(today.getDate() + 2));
             let nextWeek = new Date(new Date().setDate(today.getDate() + 7));
 
             if (dateTime < today) {
-                console.log('what...');
                 return this.ask(this.t('slot-datetime-past'));
             }
             if (dateTime > nextWeek) {
                 return this.ask(this.t('slot-datetime-7d'));
+            }
+            if(dateTime > twoDays) {
+                time = undefined;
             }
         }
 
@@ -105,7 +108,7 @@ app.setHandler({
         let visibility = Math.round(result.visibility);
 
         let speechOutput;
-        let dateTimeString = Utility.getDateTimeString(result.dateTime, !!time, this.getLocale());
+        let dateTimeString = Utility.getDateTimeString(dateTime, !!time, this.getLocale());
         if (dateTimeString) {
             dateTimeString = this.t('at ') + dateTimeString;
         } else {

@@ -42,19 +42,16 @@ const Utility = {
         return date;
     },
     getDateTimeString: function (date, withTime, locale) {
-        let dateString = undefined;
+        let dateString = '';
         if (!date) return dateString;
 
         if(!Utility.sameDay(date, new Date())) {
             dateString = '<say-as interpret-as="date">' + date.toLocaleDateString(locale, { month: '2-digit', day: '2-digit' }) + '</say-as>'
         }
+
         if(withTime) {
-            let time = date.toISOString().slice(11, 16);
-            if(locale === 'en' || locale.startsWith('en')) {
-                time = date.toLocaleString(locale, { hour: 'numeric', hour12: true })
-            }
-            (dateString && dateString.length) && (dateString += ' ');
-            dateString += '<say-as interpret-as="time">' + time + '</say-as>';
+            let time = date.toLocaleString(locale, { hour: 'numeric', hour12: locale === 'en' || locale.startsWith('en') })
+            dateString += dateString.length ? ' ' : '' + '<say-as interpret-as="time">' + time + '</say-as>';
         }
 
         return dateString;
