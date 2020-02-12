@@ -12,38 +12,48 @@ const Utility = {
         let directions = ['N', 'NW', 'W', 'SW', 'S', 'SE', 'E', 'NE'];
         return directions[Math.round(((angle %= 360) < 0 ? angle + 360 : angle) / 45) % 8];
     },
-    getDateTime: function (date, time) {
-        let dateString = undefined;
-        if(!date && !time) return dateString;
-
+    /**
+     * TODO; refactor date time logic, it's hacky
+     */
+    getDateTime: function (date, time, timeAsHours) {
         if(date) {
-            dateString = date
+            date = new Date(date);
         } else {
-            dateString = (new Date()).toISOString().slice(0,10);
+            date = new Date()
         }
 
-        if (time && time !== '0') {
-            let timeString = time;
-            timeString.length === 1 && (timeString = '0' + timeString);
-            !timeString.includes(':') && (timeString += ':00');
-            dateString += 'T' + timeString;
+        if(time) {
+            if(timeAsHours) {
+                time.length === 1 && (time = '0' + time);
+                time = time + '00:00:00'.substr(0 + time.length, 8);
+                time = new Date('1970-01-01T' + time);
+            } else {
+                time = new Date(time);
+            }
+            date.setHours(time.getHours());
+            date.setMinutes(time.getMinutes());
+            date.setSeconds(time.getSeconds());
+            return date;
         }
 
-        return dateString ? new Date(dateString) : undefined;
+        date.setHours(12);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        return date;
     },
     getDateTimeString: function (date, withTime, locale) {
         let dateString = undefined;
         if (!date) return dateString;
 
         if(!Utility.sameDay(date, new Date())) {
-            dateString = '<say-as interpret-as="date" format="md">' + date.toISOString().slice(5, 10) + '</say-as>'
+            dateString = '<say-as interpret-as="date">' + date.toLocaleDateString(locale, { month: '2-digit', day: '2-digit' }) + '</say-as>'
         }
         if(withTime) {
             let time = date.toISOString().slice(11, 16);
             if(locale === 'en' || locale.startsWith('en')) {
                 time = date.toLocaleString(locale, { hour: 'numeric', hour12: true })
             }
-            dateString.length && (dateString += ' ');
+            (dateString && dateString.length) && (dateString += ' ');
             dateString += '<say-as interpret-as="time">' + time + '</say-as>';
         }
 

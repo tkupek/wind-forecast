@@ -71,14 +71,22 @@ app.setHandler({
             time = this.$inputs.time.value;
         }
 
-        let dateTime = Utility.getDateTime(date, time);
-        let today = new Date();
-        let nextWeek = new Date().setDate(today.getDate() + 7);
-        if (dateTime < today) {
-            return this.ask(this.t('slot-datetime-past'));
-        }
-        if (dateTime > nextWeek) {
-            return this.ask(this.t('slot-datetime-7d'));
+        let mode = 'current';
+        let dateTime = undefined;
+        if(date || time) {
+            mode = 'predicted';
+
+            dateTime = Utility.getDateTime(date, time, this.getType() === 'AlexaSkill');
+            let today = new Date();
+            let nextWeek = new Date(new Date().setDate(today.getDate() + 7));
+
+            if (dateTime < today) {
+                console.log('what...');
+                return this.ask(this.t('slot-datetime-past'));
+            }
+            if (dateTime > nextWeek) {
+                return this.ask(this.t('slot-datetime-7d'));
+            }
         }
 
         let result;
@@ -88,6 +96,7 @@ app.setHandler({
             if (e === 'GEOCODE_ERROR') {
                 return this.ask(this.t('slot-location-error'))
             }
+            throw e;
         }
 
         let speed = Math.round(result.windSpeed * 10) / 10;
@@ -96,11 +105,6 @@ app.setHandler({
         let visibility = Math.round(result.visibility);
 
         let speechOutput;
-        let mode = 'current';
-        if (date || time) {
-            mode = 'predicted';
-        }
-
         let dateTimeString = Utility.getDateTimeString(result.dateTime, !!time, this.getLocale());
         if (dateTimeString) {
             dateTimeString = this.t('at ') + dateTimeString;
