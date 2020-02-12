@@ -1,5 +1,5 @@
 # Wind Forecast
-Wind Forecast tells you about the wind speed, gusts, wind directions and cloud coverage around the world. Up to seven days forecast is available.
+Wind Forecast is an Action / Skill for the Google Assistant and Amazon Alexa that tells you about the wind speed, gusts, wind directions and cloud coverage around the world. Up to seven days forecast is available.
 Based on the Jovo Framework.
 
 ## Description
