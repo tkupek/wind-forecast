@@ -18,15 +18,15 @@ const forecast = {
             return await DarkSkyApi.loadTime(dateTimeString, coordinates)
                 .then(result => {
                     result = withTime ? forecast.findBestHour(result.hourly.data, dateTime) : result.daily.data[0];
-                    return forecast.parseResult(result, location, dateTime);
+                    return forecast.parseResult(result, location);
                 });
         }
 
         return await DarkSkyApi.loadCurrent(coordinates)
             .then(result => forecast.parseResult(result, location));
     },
-    parseResult: function (result, location, dateTime) {
-        return {
+    parseResult: function (result, location) {
+        let parsedResult = {
             location: location.name,
             windSpeed: result.windSpeed,
             windGust: result.windGust,
@@ -34,8 +34,11 @@ const forecast = {
             visibility: result.visibility,
             windDirection: result.windDirection ? result.windDirection : Utility.angleToDirection(result.windBearing),
             units: DarkSkyApi.getResponseUnits(),
-            dateTime: dateTime
+            dateTime: undefined
         };
+
+        result.time && (parsedResult.dateTime = new Date(result.time * 1000));
+        return parsedResult;
     },
     findBestHour: function (resultList, dateTime) {
         let bestResult = undefined;
