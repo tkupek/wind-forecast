@@ -50,7 +50,7 @@ const Utility = {
         }
 
         if(withTime) {
-            let time = date.toLocaleString(locale, { hour: 'numeric', hour12: locale === 'en' || locale.startsWith('en') })
+            let time = date.toLocaleString(locale, { hour: 'numeric', hour12: locale === 'en' || locale.startsWith('en')});
             dateString += ((dateString.length ? ' ' : '') + '<say-as interpret-as="time">' + time + '</say-as>');
         }
 
