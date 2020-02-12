@@ -17,7 +17,7 @@ const forecast = {
             console.debug('Send forecast request with location ' + JSON.stringify(coordinates) + ' and time ' + dateTimeString);
             return await DarkSkyApi.loadTime(dateTimeString, coordinates)
                 .then(result => {
-                    result = withTime ? forecast.findBestHour(result.hourly.data, dateTime) : result.daily.data[0];
+                    result = withTime ? forecast.findBestHour(result.hourly.data, dateTime, result.timezone) : result.daily.data[0];
                     return forecast.parseResult(result, location);
                 });
         }
@@ -37,14 +37,17 @@ const forecast = {
             dateTime: undefined
         };
     },
-    findBestHour: function (resultList, dateTime) {
+    findBestHour: function (resultList, dateTime, timezone) {
         let bestResult = undefined;
         let distance = -1;
 
         resultList.forEach(result => {
             let resultTime = new Date(result.time * 1000);
-            let newDistance = Math.abs(resultTime - dateTime);
+            // convert to timezone
+            resultTime = resultTime.toLocaleString("en-US", {timeZone: timezone});
+            resultTime = new Date(resultTime);
 
+            let newDistance = Math.abs(resultTime - dateTime);
             if(distance === -1) {
                 distance = newDistance;
                 bestResult = result;
