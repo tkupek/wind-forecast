@@ -7,7 +7,7 @@ Based on the Jovo Framework.
 
 
 ## Known Bugs
-- Timezone is not used, predictions are off by the timezone offset
+- speech recognition of smaller locations is problematic
 
 ## Possible improvements
 - implement geocoding caching
