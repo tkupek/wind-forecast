@@ -40,6 +40,10 @@ app.setHandler({
         return this.toIntent('HelpIntent')
     },
 
+    'AMAZON.NavigateHomeIntent'() {
+        return this.toIntent('WelcomeIntent')
+    },
+
     HelpIntent() {
         this.ask(this.t('help'));
     },
